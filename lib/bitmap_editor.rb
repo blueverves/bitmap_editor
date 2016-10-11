@@ -15,17 +15,17 @@ class BitmapEditor
   def parse_input(string)
     case string
     when /I (\d+) (\d+)/
-      @image = BitmapImage.new($1.to_i, $2.to_i)
+      @image = execute_safely Proc.new {BitmapImage.new($1.to_i, $2.to_i)}
     when 'C'
-      @image.clear
+      execute_safely Proc.new {@image.clear}
     when /L (\d+) (\d+) (.+)/
-      @image.color_pixel($1.to_i, $2.to_i, $3)
+      execute_safely Proc.new {@image.color_pixel($1.to_i, $2.to_i, $3)}
     when /V (\d+) (\d+) (\d+) (.+)/
-      @image.draw_vertical($1.to_i, $2.to_i, $3.to_i, $4)
+      execute_safely Proc.new {@image.draw_vertical($1.to_i, $2.to_i, $3.to_i, $4)}
     when /H (\d+) (\d+) (\d+) (.+)/
-      @image.draw_horizontal($1.to_i, $2.to_i, $3.to_i, $4)
+      execute_safely Proc.new {@image.draw_horizontal($1.to_i, $2.to_i, $3.to_i, $4)}
     when 'S'
-      @image.show
+      execute_safely Proc.new {@image.show}
     when '?'
       show_help
     when 'X'
@@ -54,6 +54,16 @@ V X Y1 Y2 C - Draw a vertical segment of colour C in column X between rows Y1 an
 H X1 X2 Y C - Draw a horizontal segment of colour C in row Y between columns X1 and X2 (inclusive).
 S - Show the contents of the current image
 X - Terminate the session"
+  end
+
+  def execute_safely(proc)
+    begin
+      proc.call
+    rescue NoMethodError
+      puts "image doesn't exist. Create an image first"
+    rescue BitmapImage::Error => e
+      puts e
+    end
   end
 
 end
