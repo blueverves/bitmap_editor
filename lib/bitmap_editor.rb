@@ -14,15 +14,15 @@ class BitmapEditor
 
   def parse_input(string)
     case string
-    when /I (\d+) (\d+)/
+    when /\AI (\d+) (\d+)/
       @image = execute_safely Proc.new {BitmapImage.new($1.to_i, $2.to_i)}
     when 'C'
       execute_safely Proc.new {@image.clear}
-    when /L (\d+) (\d+) (.+)/
+    when /\AL (\d+) (\d+) (.+)/
       execute_safely Proc.new {@image.color_pixel($1.to_i, $2.to_i, $3)}
-    when /V (\d+) (\d+) (\d+) (.+)/
+    when /\AV (\d+) (\d+) (\d+) (.+)/
       execute_safely Proc.new {@image.draw_vertical($1.to_i, $2.to_i, $3.to_i, $4)}
-    when /H (\d+) (\d+) (\d+) (.+)/
+    when /\AH (\d+) (\d+) (\d+) (.+)/
       execute_safely Proc.new {@image.draw_horizontal($1.to_i, $2.to_i, $3.to_i, $4)}
     when 'S'
       execute_safely Proc.new {@image.show}
