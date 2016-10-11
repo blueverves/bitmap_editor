@@ -5,11 +5,24 @@ describe BitmapImage do
   context "Draw a valid image" do
     let(:image) { BitmapImage.new(6,5) }
 
-    describe "#new" do
+    describe "#new 6, 5" do
       it "returns a new image" do
         expect(image).to be_an_instance_of(BitmapImage)
       end
     end
+
+    describe "#new 250, 2" do
+      it "returns a new image" do
+        expect(BitmapImage.new(250,2)).to be_an_instance_of(BitmapImage)
+      end
+    end
+
+    describe "#new 2, 250" do
+      it "returns a new image" do
+        expect(BitmapImage.new(2, 250)).to be_an_instance_of(BitmapImage)
+      end
+    end
+
 
     describe "#show new_image" do
       it "has 6x5 blank pixels" do
@@ -78,17 +91,29 @@ describe BitmapImage do
                              "O O O V O O\n")
       end
     end
-
-
   end
 
   context "Draw an invalid image" do
     let(:image) { BitmapImage.new(3,4) }
 
-    describe "#new" do
+    describe "#new 0, 5" do
       it "raises a BitmapImage error" do
         message = "can't create image. Width and height must be at least 1"
         expect{ BitmapImage.new(0,5) }.to raise_error(BitmapImage::Error, message)
+      end
+    end
+
+    describe "#new 251, 2" do
+      it "raises a BitmapImage error" do
+        message = "can't create image. Width and height must be at least 1"
+        expect{ BitmapImage.new(251,2) }.to raise_error(BitmapImage::Error, message)
+      end
+    end
+
+    describe "#new 2, 251" do
+      it "raises a BitmapImage error" do
+        message = "can't create image. Width and height must be at least 1"
+        expect{ BitmapImage.new(2, 251) }.to raise_error(BitmapImage::Error, message)
       end
     end
 

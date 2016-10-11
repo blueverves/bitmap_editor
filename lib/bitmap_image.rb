@@ -37,7 +37,7 @@ class BitmapImage
   private
 
   def validate_dimensions(w, h)
-    if w < 1 || h < 1
+    if w < 1 || h < 1 || w > 250 || h > 250
       raise BitmapImage::Error.new("can't create image. Width and height must be at least 1")
     end
   end
