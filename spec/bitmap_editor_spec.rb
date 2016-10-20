@@ -62,6 +62,21 @@ describe BitmapEditor do
       end
     end
 
+    describe "#parse_input F 2 3 R" do
+      it "fills region around 2 3 with same color"  do
+        new_image
+        editor.parse_input("V 2 2 4 V")
+        editor.parse_input("H 1 4 3 H")
+        editor.parse_input("L 4 4 H")
+        editor.parse_input("F 1 3 R")
+        expect_output("S", "O O O O\n" \
+                           "O V O O\n" \
+                           "R R R R\n" \
+                           "O V O R\n" \
+                           "O O O O\n")
+      end
+    end
+
     describe "#parse_input C" do
       it "resets all pixels to blank"  do
         new_image

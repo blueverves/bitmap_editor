@@ -67,6 +67,20 @@ describe BitmapImage do
       end
     end
 
+    describe "#fill_region" do
+      it "fill region with the color of the pixel" do
+        image.draw_vertical(4, 2, 5, "V")
+        image.draw_horizontal(1, 6, 3, "H")
+        image.color_pixel(3, 1, "V")
+        image.fill_region(4, 3, "R")
+        expect_output(image, "O O V O O O\n" \
+                             "O O O R O O\n" \
+                             "R R R R R R\n" \
+                             "O O O R O O\n" \
+                             "O O O R O O\n")
+      end
+    end
+
     describe "#clear" do
       it "resets all pixels to blank" do
         image.color_pixel(5,2,"C")

@@ -24,6 +24,8 @@ class BitmapEditor
       execute_safely Proc.new {@image.draw_vertical($1.to_i, $2.to_i, $3.to_i, $4)}
     when /\AH (\d+) (\d+) (\d+) (.+)/
       execute_safely Proc.new {@image.draw_horizontal($1.to_i, $2.to_i, $3.to_i, $4)}
+    when /\AF (\d+) (\d+) (.+)/
+      execute_safely Proc.new {@image.fill_region($1.to_i, $2.to_i, $3)}
     when 'S'
       execute_safely Proc.new {@image.show}
     when '?'

@@ -28,6 +28,12 @@ class BitmapImage
     (x1..x2).each{ |x| @pixels[y-1][x-1] = c }
   end
 
+  def fill_region(x, y, c)
+    validate_dimensions(x, y)
+    fill_with_same_color(x, y, c, @pixels[y-1][x-1])
+    show
+  end
+
   def show
     @pixels.each do |y|
       puts y.map { |x| x }.join(" ")
@@ -58,5 +64,14 @@ class BitmapImage
     if y > @height || x1 > @width || x2 > @width || x1 > x2 || y < 1 || x1 < 1 || x2 < 1
       raise BitmapImage::Error.new("can't draw horizontal. Coordinates are not valid")
     end
+  end
+
+  def fill_with_same_color(x, y, c, sc)
+    return unless  y <= @height && x <= @width && y >= 1 && x >= 1 && @pixels[y-1][x-1] == sc
+    @pixels[y-1][x-1] = sc
+    fill_with_same_color(x+1 ,y , c, sc)
+    fill_with_same_color(x-1 ,y , c, sc)
+    fill_with_same_color(x ,y+1 , c, sc)
+    fill_with_same_color(x ,y-1 , c, sc)
   end
 end
