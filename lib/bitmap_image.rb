@@ -31,7 +31,6 @@ class BitmapImage
   def fill_region(x, y, c)
     validate_dimensions(x, y)
     fill_with_same_color(x, y, c, @pixels[y-1][x-1])
-    show
   end
 
   def show
